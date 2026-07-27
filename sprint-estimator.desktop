@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Sprint Estimator
+Comment=Estimate sprint days from story points and Senior/Junior devs
+Exec=python3 __APP_DIR__/app.py
+Icon=__APP_DIR__/icon.png
+Terminal=false
+Categories=Development;Utility;
