@@ -11,8 +11,12 @@ Formula rules:
 - A ticket with 0 Senior AND 0 Junior cannot be added.
 """
 
+import os
 import tkinter as tk
 from tkinter import ttk, messagebox
+
+APP_DIR = os.path.dirname(os.path.abspath(__file__))
+ICON_PATH = os.path.join(APP_DIR, "icon.png")
 
 STORY_POINTS = [1, 2, 3, 5, 8, 13]
 DEV_COUNT_OPTIONS = list(range(0, 11))  # 0 to 10
@@ -61,10 +65,20 @@ def calculate_days(story_point: int, senior: int, junior: int):
 
 class SprintEstimatorApp(tk.Tk):
     def __init__(self):
-        super().__init__()
+        # className sets the window's WM_CLASS, which docks/taskbars use to
+        # match a running window back to its .desktop launcher and icon.
+        super().__init__(className="sprint-estimator")
         self.title("Sprint Estimator")
         self.geometry("720x560")
         self.minsize(680, 480)
+
+        if os.path.exists(ICON_PATH):
+            try:
+                icon_img = tk.PhotoImage(file=ICON_PATH)
+                self.iconphoto(True, icon_img)
+                self._icon_img_ref = icon_img  # keep a reference alive
+            except tk.TclError:
+                pass
 
         self.tickets = []  # in-memory list of dicts, no persistence
         self._row_counter = 0
